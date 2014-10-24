@@ -1,0 +1,2 @@
+group-1;living room;appl-1;appl-3
+group-2;bathroom;appl-4;appl-5
