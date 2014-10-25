@@ -95,7 +95,7 @@ public class Main {
 		revalidateButton();
 	}
 	
-	static public void showPanel(String name){
+	 public static void showPanel(String name){
 		int index = panelNames.indexOf(name) -1;
 		AbstractGUIInterface panel = panels.get(index);
 		try{

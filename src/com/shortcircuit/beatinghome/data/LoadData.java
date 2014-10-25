@@ -51,7 +51,6 @@ public class LoadData {
 		}
 		brUsername.close();
 		model.put("Users", users);
-		
 	}
 	
 	private ArrayList<Environment> loadEnvironments(String username) throws IOException{
