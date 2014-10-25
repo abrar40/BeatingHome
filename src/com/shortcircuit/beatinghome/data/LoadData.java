@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import com.shortcircuit.beatinghome.appliances.LightAppliance;
-
 public class LoadData {
 	private Map<String, Object> model = new HashMap<String, Object>();
 	static String resDir = "resources";
@@ -51,6 +49,7 @@ public class LoadData {
 		}
 		brUsername.close();
 		model.put("Users", users);
+		
 	}
 	
 	private ArrayList<Environment> loadEnvironments(String username) throws IOException{
@@ -94,24 +93,22 @@ public class LoadData {
 			StringTokenizer st = new StringTokenizer(line, ";");
 			String id =st.nextToken();
 			String type = st.nextToken();
-			if(type.equals("light")){
-				LightAppliance light = new LightAppliance();
-				light.setID(id);
-				light.setName(st.nextToken());
-				light.setLocation(st.nextToken());
-				light.setMacAddress(st.nextToken());
-				light.setPowerRating(st.nextToken());
-				String state=st.nextToken();
-				if(state.equals("true"))
-					light.setState(true);
-				else if(state.equals("false"))
-					light.setState(false);
-				
-				appliances.put(id, light);
-				//System.out.println("Loading Appliance -> " + light.getID()+
-					//	" "+ light.getName()+" "+light.getLocation()+" "+light.getMacAddress()+" "
-						//+light.getPowerRating());
-			}
+			
+			Appliance appliance = new Appliance();
+			appliance.setID(id);
+			appliance.setName(st.nextToken());
+			appliance.setLocation(st.nextToken());
+			appliance.setMacAddress(st.nextToken());
+			appliance.setPowerRating(st.nextToken());
+			String state=st.nextToken();
+			if(state.equals("true"))
+				appliance.setState(true);
+			else if(state.equals("false"))
+				appliance.setState(false);
+			double controlValue = Double.parseDouble(st.nextToken());
+			appliance.setControlValue(controlValue);	
+			appliances.put(id, appliance);
+			
 		}
 		brAppl.close();
 		model.put("Appliances", appliances);

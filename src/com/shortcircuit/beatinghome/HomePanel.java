@@ -1,5 +1,6 @@
 package com.shortcircuit.beatinghome;
 
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -12,13 +13,18 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-import com.shortcircuit.beatinghome.appliances.AbstractApplianceInterface;
+import com.shortcircuit.beatinghome.data.Appliance;
 import com.shortcircuit.beatinghome.data.Environment;
 import com.shortcircuit.beatinghome.data.Group;
 import com.shortcircuit.beatinghome.data.User;
@@ -27,6 +33,8 @@ public class HomePanel extends AbstractGUI {
 	private Map<String, Object>  model;
 	private ArrayList<Environment> environments = null;
 	private JPanel pnlEnv = new JPanel();
+	private DefaultListModel<String> modelEnv = new DefaultListModel<String>();
+	private JList listEnv = new JList(modelEnv);
 	private JPanel pnlAppl = new JPanel();
 	private JPanel pnlGroup = new JPanel();
 	private String selectedEnv = "";
@@ -42,7 +50,7 @@ public class HomePanel extends AbstractGUI {
 	
 	private void init(){
 		GridBagLayout gbl_main = new GridBagLayout();
-		this.setLayout(gbl_main);
+		setLayout(gbl_main);
 		
 		pnlEnv.setLayout(new BoxLayout(pnlEnv, BoxLayout.Y_AXIS));
 		Border border = BorderFactory.createTitledBorder("Environments");
@@ -59,6 +67,7 @@ public class HomePanel extends AbstractGUI {
 		add(pnlEnv, gbc_pnlEnv);
 		
 		lblEnv = new JLabel(selectedEnv);
+		lblEnv.setFont(new Font("Serif", Font.BOLD, 36));
 		GridBagConstraints gbc_lblEnv = new GridBagConstraints();
 		gbc_lblEnv.gridx=1;
 		gbc_lblEnv.gridy=0;
@@ -103,50 +112,83 @@ public class HomePanel extends AbstractGUI {
 	
 	private JPanel envPanel(){
 		JPanel pnlEnv = new JPanel();
-		pnlEnv.setLayout(new BoxLayout(pnlEnv, BoxLayout.Y_AXIS));
-		String user = (String) model.get("SelectedUser");
+		pnlEnv.setLayout(new GridBagLayout());
+		String userName = (String) model.get("SelectedUser");
 		
 		//Get the environments corresponding to the user
 		ArrayList<User> users = (ArrayList<User>)model.get("Users");
 		for(int i=0; i<users.size();i++){
 			User temp = users.get(i);
-			if(user.equals(temp.getName())){
+			if(userName.equals(temp.getName())){
 				environments = temp.getEnvironments();
 			}
 		}
-		//Add the environments as radio buttons
+		
+
+		JButton btnAdd = new JButton("+");
+		btnAdd.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		GridBagConstraints gbc_btnAdd = new GridBagConstraints();
+		gbc_btnAdd.gridx=0;
+		gbc_btnAdd.gridy=0;
+		gbc_btnAdd.weighty=Double.MIN_VALUE;
+		gbc_btnAdd.weightx=1;
+		gbc_btnAdd.anchor= GridBagConstraints.EAST;
+		pnlEnv.add(btnAdd, gbc_btnAdd);
+		
+		JButton btnDlt = new JButton("-");
+		btnDlt.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		GridBagConstraints gbc_btnDlt = new GridBagConstraints();
+		gbc_btnDlt.gridx=1;
+		gbc_btnDlt.gridy=0;
+		gbc_btnDlt.weightx=Double.MIN_VALUE;
+		gbc_btnDlt.weighty=Double.MIN_VALUE;
+		gbc_btnDlt.anchor= GridBagConstraints.EAST;
+		pnlEnv.add(btnDlt, gbc_btnDlt);
+		
+		GridBagConstraints gbc_listEnv = new GridBagConstraints();
+		gbc_listEnv.gridx=0;
+		gbc_listEnv.gridy=1;
+		gbc_listEnv.gridwidth=2;
+		gbc_listEnv.fill=GridBagConstraints.BOTH;
+		gbc_listEnv.insets = new Insets(5, 5, 5, 5);
+		gbc_listEnv.weighty=1;
+		gbc_listEnv.weightx=1;
+		pnlEnv.add(listEnv, gbc_listEnv);
+		
+		//Add the environments in the jlist
 		if(environments!=null){
 			for(int i=0;i<environments.size();i++){
 				Environment temp = environments.get(i);
-				final JRadioButton rdbtn = new JRadioButton(temp.getName());
-				rdbtn.setName(temp.getName());
-				
-				rdbtn.addActionListener(new ActionListener(){
-					public void actionPerformed(ActionEvent arg0) {
+				modelEnv.addElement(temp.getName());
+				listEnv.addListSelectionListener(new ListSelectionListener(){
+					@Override
+					public void valueChanged(ListSelectionEvent e) {
 						// TODO Auto-generated method stub
-						selectedEnv = rdbtn.getText();
+						int index = listEnv.getSelectedIndex();
+						selectedEnv = modelEnv.getElementAt(index);
 						lblEnv.setText(selectedEnv);
 						lblEnv.revalidate();
-						
 						for(int j=0;j<environments.size();j++){
 							Environment temp2 = environments.get(j);
 							if(temp2.getName().equals(selectedEnv))
 								selectedEnvironment = temp2;
 						}
-						
 						groupPanel(selectedEnvironment);
 					}
 				});
-				if(i==0){
-					rdbtn.setSelected(true);
-					selectedEnv = rdbtn.getText();
-					lblEnv.setText(selectedEnv);
-					lblEnv.revalidate();
-					selectedEnvironment = temp;
-					groupPanel(selectedEnvironment);
-				}	
-				btnGroup.add(rdbtn);
-				pnlEnv.add(rdbtn);
+				listEnv.setSelectedIndex(0);
 			}
 		}
 		return pnlEnv;
@@ -189,7 +231,7 @@ public class HomePanel extends AbstractGUI {
 			ArrayList<String> appl = selectedEnvironment.getAppliances();
 			Map<String, Object> appliances = (Map<String, Object>) model.get("Appliances");
 			for(int j=0; j<appl.size(); j++){
-				AbstractApplianceInterface applInf = (AbstractApplianceInterface) appliances.get(appl.get(j));
+				Appliance applInf = (Appliance) appliances.get(appl.get(j));
 				pnlAppl.add(applPanel(applInf));
 			}
 		}else{
@@ -209,17 +251,17 @@ public class HomePanel extends AbstractGUI {
 				Map<String, Object> appliances = (Map<String, Object>) model.get("Appliances");
 				for(int j=0; j<appl.size(); j++){
 					System.out.println("Adding appliance ");
-					AbstractApplianceInterface applInf = (AbstractApplianceInterface) appliances.get(appl.get(j));
+					Appliance applInf = (Appliance) appliances.get(appl.get(j));
 					pnlAppl.add(applPanel(applInf));
 				}
 			}
 		}
 		pnlAppl.revalidate();
 	}
-	private JPanel applPanel(AbstractApplianceInterface appl){
+	
+	private JPanel applPanel(Appliance appl){
 		JPanel pnlAppl = new JPanel();
 		pnlAppl.setLayout(new BoxLayout(pnlAppl, BoxLayout.Y_AXIS));
-		
 		JLabel lblName = new JLabel(appl.getName());
 		String state;
 		if(appl.getState())
@@ -227,7 +269,6 @@ public class HomePanel extends AbstractGUI {
 		else
 			state="off";
 		JLabel lblState = new JLabel(state);
-		
 		JPanel pnlHor = new JPanel();
 		pnlHor.setLayout(new BoxLayout(pnlHor, BoxLayout.X_AXIS));
 		pnlHor.add(lblName);

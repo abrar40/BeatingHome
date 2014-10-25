@@ -38,5 +38,12 @@ public class Group {
 		return appliances;
 	}
 	
+	public String getPrintLine(){
+		String line = id+";"+name;
+		for(int i=0;i<appliances.size();i++){
+			line=line+";"+appliances.get(i);
+		}
+		return line;
+	}
 
 }
