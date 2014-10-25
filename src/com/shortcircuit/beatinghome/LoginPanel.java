@@ -30,7 +30,7 @@ public class LoginPanel extends AbstractGUI{
 		GridBagLayout gbl_login = new GridBagLayout();
 		setLayout(gbl_login);
 		
-		final JTextField txtUsername = new JTextField("username...");
+		final JTextField txtUsername = new JTextField("Username...");
 		GridBagConstraints gbc_txtUsername = new GridBagConstraints();
 		gbc_txtUsername.insets = new Insets(5, 5, 5, 5);
 		gbc_txtUsername.anchor = GridBagConstraints.CENTER;
@@ -39,7 +39,7 @@ public class LoginPanel extends AbstractGUI{
 		gbc_txtUsername.fill= GridBagConstraints.HORIZONTAL;
 		add(txtUsername, gbc_txtUsername);
 		
-		final JTextField txtPassword = new JTextField("password...");
+		final JTextField txtPassword = new JTextField("Password...");
 		GridBagConstraints gbc_txtPassword = new GridBagConstraints();
 		gbc_txtPassword.insets = new Insets(5, 5, 5, 5);
 		gbc_txtPassword.anchor = GridBagConstraints.CENTER;
@@ -98,7 +98,7 @@ public class LoginPanel extends AbstractGUI{
 
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				String username = txtUsername.getText();
+				/*String username = txtUsername.getText();
 				String password = txtPassword.getText();
 				
 				try {
@@ -106,8 +106,8 @@ public class LoginPanel extends AbstractGUI{
 				} catch (IOException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
-				}
-				
+				}*/
+				Main.showPanel("ProfilePanel");
 				
 			}
 			

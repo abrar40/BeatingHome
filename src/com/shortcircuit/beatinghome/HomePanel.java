@@ -42,7 +42,7 @@ public class HomePanel extends AbstractGUI {
 	
 	private void init(){
 		GridBagLayout gbl_main = new GridBagLayout();
-		setLayout(gbl_main);
+		this.setLayout(gbl_main);
 		
 		pnlEnv.setLayout(new BoxLayout(pnlEnv, BoxLayout.Y_AXIS));
 		Border border = BorderFactory.createTitledBorder("Environments");
@@ -119,17 +119,21 @@ public class HomePanel extends AbstractGUI {
 			for(int i=0;i<environments.size();i++){
 				Environment temp = environments.get(i);
 				final JRadioButton rdbtn = new JRadioButton(temp.getName());
+				rdbtn.setName(temp.getName());
+				
 				rdbtn.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent arg0) {
 						// TODO Auto-generated method stub
 						selectedEnv = rdbtn.getText();
 						lblEnv.setText(selectedEnv);
 						lblEnv.revalidate();
+						
 						for(int j=0;j<environments.size();j++){
 							Environment temp2 = environments.get(j);
 							if(temp2.getName().equals(selectedEnv))
 								selectedEnvironment = temp2;
 						}
+						
 						groupPanel(selectedEnvironment);
 					}
 				});
