@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.*;
@@ -103,6 +104,29 @@ public class ProfilePanel extends AbstractGUI{
 		gbc_txtPass.fill= GridBagConstraints.HORIZONTAL;
 		add(txtPass, gbc_txtPass);
 		
+	
+		JLabel lblEnv = new JLabel("Environement");
+		GridBagConstraints gbc_lblEnv = new GridBagConstraints();
+		gbc_lblEnv.insets = new Insets(5, 5, 5, 5);
+		gbc_lblEnv.anchor = GridBagConstraints.CENTER;
+		gbc_lblEnv.gridx=0;
+		gbc_lblEnv.gridy=4;
+		gbc_lblEnv.gridwidth=1;
+		//gbc_lblTitle.weightx=0.5;
+		gbc_lblEnv.fill= GridBagConstraints.HORIZONTAL;
+		add(lblEnv, gbc_lblEnv);
+		
+		JTextField txtEnv = new RoundJTextField(15,"Home");
+		GridBagConstraints gbc_txtEnv = new GridBagConstraints();
+		gbc_txtEnv.insets = new Insets(5, 5, 5, 5);
+		gbc_txtEnv.anchor = GridBagConstraints.CENTER;
+		gbc_txtEnv.gridx=1;
+		gbc_txtEnv.gridy=4;
+		gbc_txtEnv.gridwidth=4;
+		//gbc_lblTitle.weightx=0.5;
+		gbc_txtEnv.fill= GridBagConstraints.HORIZONTAL;
+		add(txtEnv, gbc_txtEnv);
+		
 		JButton butCreate = new JButton("Create Profile");
 		GridBagConstraints gbc_But = new GridBagConstraints();
 		gbc_But.insets = new Insets(20, 5, 5, 5);
@@ -119,14 +143,19 @@ public class ProfilePanel extends AbstractGUI{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String username = txtUser.getText();
-				String password = txtPass.getText();
-				
-				
+				String password = new String(txtPass.getPassword());
+				String name = txtEnv.getText();
+				ArrayList<String> appliances= new ArrayList<String>();
+				ArrayList<String> groups =new ArrayList<String>();
+				appliances.add("Light");
+				groups.add("Group1");
+				//change once function is complete
 				if(false){//SaveData.UExist(username)){
 					JOptionPane.showMessageDialog(null, "Username exists, please enter a different Username!");
 				}else{
 					try {
 						SaveData.saveUser(username, password);
+						SaveData.saveEnvironment(username, name, appliances, groups); //sample apps? groups?
 						Main.showPanel("LoginPanel");
 					} catch (IOException e2) {
 						e2.printStackTrace();
