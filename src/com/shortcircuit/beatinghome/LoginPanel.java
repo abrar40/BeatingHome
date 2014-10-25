@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.shortcircuit.beatinghome.data.SaveData;
@@ -30,7 +32,7 @@ public class LoginPanel extends AbstractGUI{
 		GridBagLayout gbl_login = new GridBagLayout();
 		setLayout(gbl_login);
 		
-		final JTextField txtUsername = new JTextField("Username...");
+		final JTextField txtUsername = new RoundJTextField(15, "Username...");
 		GridBagConstraints gbc_txtUsername = new GridBagConstraints();
 		gbc_txtUsername.insets = new Insets(5, 5, 5, 5);
 		gbc_txtUsername.anchor = GridBagConstraints.CENTER;
@@ -39,7 +41,8 @@ public class LoginPanel extends AbstractGUI{
 		gbc_txtUsername.fill= GridBagConstraints.HORIZONTAL;
 		add(txtUsername, gbc_txtUsername);
 		
-		final JTextField txtPassword = new JTextField("Password...");
+		final JPasswordField txtPassword = new RoundJPassField(15,"Password...");
+		txtPassword.setEchoChar('*');
 		GridBagConstraints gbc_txtPassword = new GridBagConstraints();
 		gbc_txtPassword.insets = new Insets(5, 5, 5, 5);
 		gbc_txtPassword.anchor = GridBagConstraints.CENTER;
@@ -90,7 +93,8 @@ public class LoginPanel extends AbstractGUI{
 				if(match)
 					Main.showPanel("HomePanel");
 				else
-					System.out.println("No match for password/username");
+					//System.out.println("No match for password/username");
+					JOptionPane.showMessageDialog(null, "No match for password/username!");
 			}
 		});
 		
@@ -98,15 +102,7 @@ public class LoginPanel extends AbstractGUI{
 
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				/*String username = txtUsername.getText();
-				String password = txtPassword.getText();
 				
-				try {
-					SaveData.saveUser(username, password);
-				} catch (IOException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}*/
 				Main.showPanel("ProfilePanel");
 				
 			}

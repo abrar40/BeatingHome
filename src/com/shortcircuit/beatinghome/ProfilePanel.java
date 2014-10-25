@@ -46,7 +46,7 @@ public class ProfilePanel extends AbstractGUI{
 		gbc_lblName.fill= GridBagConstraints.HORIZONTAL;
 		add(lblName, gbc_lblName);
 		
-		JTextField txtName = new RoundJTextField(15);
+		JTextField txtName = new RoundJTextField(15,"");
 		GridBagConstraints gbc_txtName = new GridBagConstraints();
 		gbc_txtName.insets = new Insets(5, 5, 5, 5);
 		gbc_txtName.anchor = GridBagConstraints.CENTER;
@@ -69,7 +69,7 @@ public class ProfilePanel extends AbstractGUI{
 		gbc_lblUser.fill= GridBagConstraints.HORIZONTAL;
 		add(lblUser, gbc_lblUser);
 		
-		JTextField txtUser = new RoundJTextField(15);
+		JTextField txtUser = new RoundJTextField(15,"");
 		GridBagConstraints gbc_txtUser = new GridBagConstraints();
 		gbc_txtUser.insets = new Insets(5, 5, 5, 5);
 		gbc_txtUser.anchor = GridBagConstraints.CENTER;
@@ -91,7 +91,8 @@ public class ProfilePanel extends AbstractGUI{
 		gbc_lblPass.fill= GridBagConstraints.HORIZONTAL;
 		add(lblPass, gbc_lblPass);
 		
-		JTextField txtPass = new RoundJTextField(15);
+		JPasswordField txtPass = new RoundJPassField(15, "");
+		txtPass.setEchoChar('*');
 		GridBagConstraints gbc_txtPass = new GridBagConstraints();
 		gbc_txtPass.insets = new Insets(5, 5, 5, 5);
 		gbc_txtPass.anchor = GridBagConstraints.CENTER;

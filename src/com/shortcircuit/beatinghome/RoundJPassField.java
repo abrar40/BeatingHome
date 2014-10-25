@@ -6,9 +6,9 @@ import java.awt.geom.*;
 
 import javax.swing.*;
 
-public class RoundJTextField extends JTextField {
+public class RoundJPassField extends JPasswordField {
     private Shape shape;
-    public RoundJTextField(int size, String a) {
+    public RoundJPassField(int size, String a) {
         super(size);
         super.setText(a);
         setOpaque(false); // As suggested by @AVD in comment.

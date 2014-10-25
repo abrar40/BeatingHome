@@ -56,11 +56,15 @@ public class Main {
 		homePanel.setName("HomePanel");
 		cardPanel.add(homePanel, "HomePanel");
 		panelNames.add("HomePanel");
+		
+		
 	
 		//**********************ADD PANELS TO ARRAYLIST********************************
 		current = (AbstractGUI)loginPanel;
 		panels.add((AbstractGUI)loginPanel);
-		panels.add((AbstractGUI)homePanel);	
+		panels.add((AbstractGUI)profilePanel);
+		panels.add((AbstractGUI)homePanel);
+
 		
 	}
 	
@@ -96,7 +100,7 @@ public class Main {
 	}
 	
 	 public static void showPanel(String name){
-		int index = panelNames.indexOf(name) -1;
+		int index = panelNames.indexOf(name) ;
 		AbstractGUIInterface panel = panels.get(index);
 		try{
 			panel.beforeshow();
