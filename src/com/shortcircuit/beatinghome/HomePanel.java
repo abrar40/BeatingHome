@@ -43,6 +43,7 @@ public class HomePanel extends AbstractGUI {
 	JLabel lblEnv;
 	private boolean firstTime = true;
 	
+	
 	HomePanel(Map<String, Object> model){
 		this.model = model;
 		init();
@@ -74,6 +75,7 @@ public class HomePanel extends AbstractGUI {
 		gbc_lblEnv.weighty=0.1;
 		gbc_lblEnv.insets = new Insets(10, 10, 10, 10);
 		add(lblEnv, gbc_lblEnv);
+		model.put("EnvironmentTitle", lblEnv);
 		
 		pnlAppl.setLayout(new BoxLayout(pnlAppl, BoxLayout.Y_AXIS));
 		Border border1 = BorderFactory.createTitledBorder("Appliances");
@@ -104,180 +106,19 @@ public class HomePanel extends AbstractGUI {
 		//Implement beforeshow method
 		String user = (String) model.get("SelectedUser");
 		System.out.println("beforeshow is being implemented for user:" +user);
+		GroupPanel groupPanel = new GroupPanel(model);
+		pnlGroup.add(groupPanel);
+		model.put("GroupPanel", groupPanel);
+		AppliancePanel applPanel = new AppliancePanel(model);
+		pnlAppl.add(applPanel);
+		model.put("AppliancePanel", pnlEnv);
+		EnvironmentPanel envPanel = new EnvironmentPanel(model);
+		System.out.println("Adding Environment Panel");
+		pnlEnv.add(envPanel);
+		if(model.containsKey("SelectedEnvironment"))
+			selectedEnvironment=(Environment)model.get("SelectedEnvironment");
 		
-		pnlEnv.add(envPanel());
-		//showAppliances();
 		revalidate();
 	}
 	
-	private JPanel envPanel(){
-		JPanel pnlEnv = new JPanel();
-		pnlEnv.setLayout(new GridBagLayout());
-		String userName = (String) model.get("SelectedUser");
-		
-		//Get the environments corresponding to the user
-		ArrayList<User> users = (ArrayList<User>)model.get("Users");
-		for(int i=0; i<users.size();i++){
-			User temp = users.get(i);
-			if(userName.equals(temp.getName())){
-				environments = temp.getEnvironments();
-			}
-		}
-		
-
-		JButton btnAdd = new JButton("+");
-		btnAdd.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		GridBagConstraints gbc_btnAdd = new GridBagConstraints();
-		gbc_btnAdd.gridx=0;
-		gbc_btnAdd.gridy=0;
-		gbc_btnAdd.weighty=Double.MIN_VALUE;
-		gbc_btnAdd.weightx=1;
-		gbc_btnAdd.anchor= GridBagConstraints.EAST;
-		pnlEnv.add(btnAdd, gbc_btnAdd);
-		
-		JButton btnDlt = new JButton("-");
-		btnDlt.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		GridBagConstraints gbc_btnDlt = new GridBagConstraints();
-		gbc_btnDlt.gridx=1;
-		gbc_btnDlt.gridy=0;
-		gbc_btnDlt.weightx=Double.MIN_VALUE;
-		gbc_btnDlt.weighty=Double.MIN_VALUE;
-		gbc_btnDlt.anchor= GridBagConstraints.EAST;
-		pnlEnv.add(btnDlt, gbc_btnDlt);
-		
-		GridBagConstraints gbc_listEnv = new GridBagConstraints();
-		gbc_listEnv.gridx=0;
-		gbc_listEnv.gridy=1;
-		gbc_listEnv.gridwidth=2;
-		gbc_listEnv.fill=GridBagConstraints.BOTH;
-		gbc_listEnv.insets = new Insets(5, 5, 5, 5);
-		gbc_listEnv.weighty=1;
-		gbc_listEnv.weightx=1;
-		pnlEnv.add(listEnv, gbc_listEnv);
-		
-		//Add the environments in the jlist
-		if(environments!=null){
-			for(int i=0;i<environments.size();i++){
-				Environment temp = environments.get(i);
-				modelEnv.addElement(temp.getName());
-				listEnv.addListSelectionListener(new ListSelectionListener(){
-					@Override
-					public void valueChanged(ListSelectionEvent e) {
-						// TODO Auto-generated method stub
-						int index = listEnv.getSelectedIndex();
-						selectedEnv = modelEnv.getElementAt(index);
-						lblEnv.setText(selectedEnv);
-						lblEnv.revalidate();
-						for(int j=0;j<environments.size();j++){
-							Environment temp2 = environments.get(j);
-							if(temp2.getName().equals(selectedEnv))
-								selectedEnvironment = temp2;
-						}
-						groupPanel(selectedEnvironment);
-					}
-				});
-				listEnv.setSelectedIndex(0);
-			}
-		}
-		return pnlEnv;
-	}
-	
-	private void groupPanel(Environment env){
-		//Create the groups combo box
-		pnlGroup.removeAll();
-		pnlGroup.setLayout(new BoxLayout(pnlGroup, BoxLayout.Y_AXIS));
-		ArrayList<String> al_groups = new ArrayList<String>();
-		al_groups.add("None");
-		ArrayList<String> groupList = env.getGroups();
-		Map<String, Group> groups = (Map<String, Group>)model.get("Groups");
-		Group group = null;
-		for(int j=0; j<groupList.size();j++){
-			group = groups.get(groupList.get(j));
-			//JLabel lblGroupName = new JLabel(group.getName());
-			al_groups.add(group.getName());
-		}
-
-		final JComboBox<String> cmbx = new JComboBox<String>(al_groups.toArray(new String[0]));
-		cmbx.setEditable(false);
-		cmbx.setSelectedIndex(0);
-		cmbx.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				firstTime=false;
-				showAppliances((String)cmbx.getSelectedItem());
-			}
-		});
-		pnlGroup.add(cmbx);
-		pnlGroup.revalidate();
-		if(firstTime)
-			showAppliances("None");
-	}
-	
-	private void showAppliances(String name){
-		pnlAppl.removeAll();
-		if(name.equals("None")){
-			ArrayList<String> appl = selectedEnvironment.getAppliances();
-			Map<String, Object> appliances = (Map<String, Object>) model.get("Appliances");
-			for(int j=0; j<appl.size(); j++){
-				Appliance applInf = (Appliance) appliances.get(appl.get(j));
-				pnlAppl.add(applPanel(applInf));
-			}
-		}else{
-			if(name!=null){
-				Group group = new Group();
-				Map<String, Object> groups = (Map<String, Object>)model.get("Groups");
-				for(int i=1; i<=groups.size(); i++){
-					String tempID = "group-"+i;
-					if(groups.containsKey(tempID)){
-						Group temp = (Group) groups.get(tempID);
-						if(temp.getName().equals(name))
-							group=(Group) groups.get(tempID);
-					}
-				}
-				ArrayList<String> appl = group.getAppliances();
-				System.out.println("Size of the appliances in the group is " + appl.size());
-				Map<String, Object> appliances = (Map<String, Object>) model.get("Appliances");
-				for(int j=0; j<appl.size(); j++){
-					System.out.println("Adding appliance ");
-					Appliance applInf = (Appliance) appliances.get(appl.get(j));
-					pnlAppl.add(applPanel(applInf));
-				}
-			}
-		}
-		pnlAppl.revalidate();
-	}
-	
-	private JPanel applPanel(Appliance appl){
-		JPanel pnlAppl = new JPanel();
-		pnlAppl.setLayout(new BoxLayout(pnlAppl, BoxLayout.Y_AXIS));
-		JLabel lblName = new JLabel(appl.getName());
-		String state;
-		if(appl.getState())
-			state="on";
-		else
-			state="off";
-		JLabel lblState = new JLabel(state);
-		JPanel pnlHor = new JPanel();
-		pnlHor.setLayout(new BoxLayout(pnlHor, BoxLayout.X_AXIS));
-		pnlHor.add(lblName);
-		pnlHor.add(Box.createHorizontalStrut(20));
-		pnlHor.add(lblState);
-		pnlAppl.add(pnlHor);
-		return pnlAppl;
-	}
-	
-	
-
 }
