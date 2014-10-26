@@ -1,6 +1,6 @@
-appl-1;light;name1;location;mac;power_rating;true
-appl-2;light;name2;location;mac;power_rating;true
-appl-3;light;name3;location;mac;power_rating;false
-appl-4;light;name4;location;mac;power_rating;false
-appl-5;light;name5;location;mac;power_rating;true
-appl-6;light;name6;location;mac;power_rating;false
+appl-1;light;name1;location;mac;power_rating;true;1.5
+appl-2;light;name2;location;mac;power_rating;true;2
+appl-3;light;name3;location;mac;power_rating;false;3.4
+appl-4;light;name4;location;mac;power_rating;false;4
+appl-5;light;name5;location;mac;power_rating;true;5
+appl-6;light;name6;location;mac;power_rating;false;6.7
