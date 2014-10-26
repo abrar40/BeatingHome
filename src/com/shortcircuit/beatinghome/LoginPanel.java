@@ -1,16 +1,9 @@
 package com.shortcircuit.beatinghome;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -40,6 +33,12 @@ public class LoginPanel extends AbstractGUI{
 		gbc_txtUsername.gridy=0;
 		gbc_txtUsername.fill= GridBagConstraints.HORIZONTAL;
 		add(txtUsername, gbc_txtUsername);
+		txtUsername.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+            	txtUsername.setText("");
+            }
+        });
 		
 		final JPasswordField txtPassword = new RoundJPassField(15,"Password...");
 		txtPassword.setEchoChar('*');
@@ -50,6 +49,12 @@ public class LoginPanel extends AbstractGUI{
 		gbc_txtPassword.gridy=1;
 		gbc_txtPassword.fill= GridBagConstraints.HORIZONTAL;
 		add(txtPassword, gbc_txtPassword);
+		txtPassword.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+            	txtPassword.setText("");
+            }
+        });
 		
 		JButton btnLogin = new JButton("Login");
 		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
@@ -78,7 +83,7 @@ public class LoginPanel extends AbstractGUI{
 				// TODO Auto-generated method stub
 				ArrayList<User> users = (ArrayList<User>)model.get("Users");
 				String username = txtUsername.getText();
-				String password = txtPassword.getText();
+				String password = new String(txtPassword.getPassword());
 
 				boolean match=false;
 				for(int i=0;i<users.size();i++){

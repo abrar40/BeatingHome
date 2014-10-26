@@ -149,6 +149,7 @@ public class ProfilePanel extends AbstractGUI{
 				ArrayList<String> groups =new ArrayList<String>();
 				appliances.add("Light");
 				groups.add("Group1");
+				
 				//change once function is complete
 				if(false){//SaveData.UExist(username)){
 					JOptionPane.showMessageDialog(null, "Username exists, please enter a different Username!");
