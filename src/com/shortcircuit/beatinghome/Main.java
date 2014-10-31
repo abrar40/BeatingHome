@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -30,7 +29,6 @@ public class Main {
 	Main() throws IOException{
 		LoadData load = new LoadData(model);
 		init();
-		
 	}
 	
 	public void init() throws IOException{
@@ -62,14 +60,11 @@ public class Main {
 		
 	
 		//**********************ADD PANELS TO ARRAYLIST********************************
-		MenuBar menuBar= new MenuBar();
 		current = (AbstractGUI)loginPanel;
 		panels.add((AbstractGUI)loginPanel);
 		panels.add((AbstractGUI)profilePanel);
 		panels.add((AbstractGUI)homePanel);
-		
-		frame.setJMenuBar(menuBar.getMenu());
-		frame.setVisible(true);
+
 		
 	}
 	
