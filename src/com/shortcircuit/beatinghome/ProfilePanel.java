@@ -156,8 +156,8 @@ public class ProfilePanel extends AbstractGUI{
 				String name = txtEnv.getText();
 				ArrayList<String> appliances= new ArrayList<String>();
 				ArrayList<String> groups =new ArrayList<String>();
-				appliances.add("Light");
-				groups.add("Group1");
+				//appliances.add("Light");
+				//groups.add("Group1");
 				
 				//change once function is complete
 				if(loadData.userExists(username)){
