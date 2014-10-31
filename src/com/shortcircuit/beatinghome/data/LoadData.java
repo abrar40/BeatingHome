@@ -28,6 +28,7 @@ public class LoadData {
 		loadUsernames();
 	}
 	
+	
 	private void loadUsernames() throws IOException{
 		createFlUsernames();
 		createFlEnvironments();
@@ -37,6 +38,7 @@ public class LoadData {
 		FileReader frUsername =new FileReader(flUsernames);
 		BufferedReader brUsername = new BufferedReader(frUsername);
 		String line;
+		
 		while((line=brUsername.readLine())!=null){
 			StringTokenizer st = new StringTokenizer(line, ";");
 			String username = st.nextToken();
@@ -47,6 +49,7 @@ public class LoadData {
 			user.setEnvironments(loadEnvironments(username));
 			users.add(user);
 		}
+		
 		brUsername.close();
 		model.put("Users", users);
 		
