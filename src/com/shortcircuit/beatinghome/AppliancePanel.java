@@ -14,17 +14,12 @@ import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
 import javax.swing.ListCellRenderer;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -85,7 +80,6 @@ public class AppliancePanel extends JPanel{
 		add(btnDlt, gbc_btnDlt);
 		
 		list.setCellRenderer(renderer);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane pane = new JScrollPane(list);
 		GridBagConstraints gbc_pane = new GridBagConstraints();
 		gbc_pane.gridx=0;
@@ -157,7 +151,6 @@ class ApplianceCellRenderer extends JPanel implements ListCellRenderer{
 	JLabel lblType;
 	JLabel lblLocation;
 	JPanel pnlControl;
-	private String lightImagePath = "resources/light.png";
 	
 	ApplianceCellRenderer(){
 		setLayout(new GridBagLayout());
@@ -222,50 +215,19 @@ class ApplianceCellRenderer extends JPanel implements ListCellRenderer{
 		lblType.setText(appl.getType());
 		
 		if(appl.getType().equals("light")){
-			pnlControl.add(pnlLightControl());
+			//pnlControl.add(pnlLightControl());
 		}else if(appl.getType().equals("ac")){
 	
 		}else if(appl.getType().equals("music")){
 		
 		}
 		
-		if(isSelected){
-			setBackground(Color.BLUE);
-		}
-		
 		return this;
 	}
 	
 	JPanel pnlLightControl(){
-		pnlControl.removeAll();
 		JPanel pnl = new JPanel();
-		pnl.setLayout(new BoxLayout(pnl, BoxLayout.X_AXIS));
-		
-		java.net.URL imageURL = AppliancePanel.class.getResource(lightImagePath);
-		ImageIcon img = new ImageIcon(lightImagePath);
-		JLabel lblImg = new JLabel(img);
-		pnl.add(lblImg);
-		
-		JSlider slider = new JSlider(1, 3, 1);
-		slider.setMajorTickSpacing(1);
-		slider.setPaintTicks(true);
-		slider.setPaintLabels(true);
-		slider.addChangeListener(new ChangeListener(){
-
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				// TODO Auto-generated method stub
-				JSlider source = (JSlider)e.getSource();
-			    if (!source.getValueIsAdjusting()) {
-			        int value = (int)source.getValue();
-			        System.out.println("JSlider value selected : "+ value);
-			    }
-			
-			}
-			
-		});
-		pnl.add(slider);
-		
+		//pnl.setLayout(new BoxLayout(pnl, BoxLayout.X_AXIS));
 		
 		
 		return pnl;
