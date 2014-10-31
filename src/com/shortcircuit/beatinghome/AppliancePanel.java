@@ -138,18 +138,6 @@ public class AppliancePanel extends JPanel{
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					// TODO Auto-generated method stub
-					/*
-					int index = list.getSelectedIndex();
-					txtSelectedAppliance = al_appls.get(index);
-					for(int i=0; i<allAppliances.size(); i++){
-						String[] ids = allAppliances.keySet().toArray(new String[0]);
-						for(int j=0; j<ids.length; j++){
-							if(txtSelectedAppliance.equals(ids[i])){
-								selectedAppliance = (Appliance) allAppliances.get(ids[i]);
-							}
-						}
-					}
-					*/
 				}
 			});
 			list.setSelectedIndex(0);
@@ -205,7 +193,7 @@ class ApplianceCellRenderer extends JPanel implements ListCellRenderer{
 		gbc_lblLocation.anchor = GridBagConstraints.WEST;
 		add(lblLocation, gbc_lblLocation);
 		
-		pnlControl = new JPanel(new BoxLayout(pnlControl, BoxLayout.X_AXIS));
+		pnlControl = new JPanel();
 		GridBagConstraints gbc_pnlControl = new GridBagConstraints();
 		gbc_pnlControl.gridx=1;
 		gbc_pnlControl.gridy=0;
@@ -227,7 +215,7 @@ class ApplianceCellRenderer extends JPanel implements ListCellRenderer{
 		lblType.setText(appl.getType());
 		
 		if(appl.getType().equals("light")){
-			pnlControl.add(pnlLightControl());
+			//pnlControl.add(pnlLightControl());
 		}else if(appl.getType().equals("ac")){
 	
 		}else if(appl.getType().equals("music")){
@@ -239,7 +227,7 @@ class ApplianceCellRenderer extends JPanel implements ListCellRenderer{
 	
 	JPanel pnlLightControl(){
 		JPanel pnl = new JPanel();
-		pnl.setLayout(new BoxLayout(pnl, BoxLayout.X_AXIS));
+		//pnl.setLayout(new BoxLayout(pnl, BoxLayout.X_AXIS));
 		
 		
 		return pnl;

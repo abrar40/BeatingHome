@@ -118,6 +118,7 @@ public class GroupPanel extends JPanel{
 					// TODO Auto-generated method stub
 					if(!e.getValueIsAdjusting()){
 						int index = list.getSelectedIndex();
+						System.out.println("Group Panel Selected Index is : " + index);
 						txtSelectedGroup = listModel.getElementAt(index);
 						if(txtSelectedGroup.equals("ALL APPLICATIONS"))
 							model.put("GroupSelected", false);
