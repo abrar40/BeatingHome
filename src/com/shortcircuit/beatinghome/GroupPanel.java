@@ -116,15 +116,23 @@ public class GroupPanel extends JPanel{
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					// TODO Auto-generated method stub
-					int index = list.getSelectedIndex();
-					txtSelectedGroup = listModel.getElementAt(index);
-					String[] ids = allGroups.keySet().toArray(new String[0]);
-					for(int j=0;j<ids.length;j++){
-						Group temp2 = (Group)allGroups.get(ids[j]);
-						if(temp2.getName().equals(txtSelectedGroup))
-							selectedGroup = temp2;
+					if(!e.getValueIsAdjusting()){
+						int index = list.getSelectedIndex();
+						txtSelectedGroup = listModel.getElementAt(index);
+						if(txtSelectedGroup.equals("ALL APPLICATIONS"))
+							model.put("GroupSelected", false);
+						else
+							model.put("GroupSelected", true);
+						String[] ids = allGroups.keySet().toArray(new String[0]);
+						for(int j=0;j<ids.length;j++){
+							Group temp2 = (Group)allGroups.get(ids[j]);
+							if(temp2.getName().equals(txtSelectedGroup))
+								selectedGroup = temp2;
+						}
+						model.put("SelectedGroup", selectedGroup);
+						AppliancePanel applPanel = (AppliancePanel)model.get("AppliancePanel");
+						applPanel.reWriteListModel();
 					}
-					model.put("SelectedGroup", selectedGroup);
 					
 				}
 			});

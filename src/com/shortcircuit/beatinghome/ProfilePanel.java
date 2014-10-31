@@ -1,21 +1,30 @@
 package com.shortcircuit.beatinghome;
 
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
+import com.shortcircuit.beatinghome.data.LoadData;
 import com.shortcircuit.beatinghome.data.SaveData;
 
 public class ProfilePanel extends AbstractGUI{
 	Map<String, Object> model;
+	private LoadData loadData;
 	
-	ProfilePanel(Map<String, Object>model){
+	ProfilePanel(Map<String, Object>model) throws IOException{
 		this.model=model;
+		loadData= new LoadData(model);
 		init();
 	}
 	
@@ -70,7 +79,7 @@ public class ProfilePanel extends AbstractGUI{
 		gbc_lblUser.fill= GridBagConstraints.HORIZONTAL;
 		add(lblUser, gbc_lblUser);
 		
-		JTextField txtUser = new RoundJTextField(15,"");
+		final JTextField txtUser = new RoundJTextField(15,"");
 		GridBagConstraints gbc_txtUser = new GridBagConstraints();
 		gbc_txtUser.insets = new Insets(5, 5, 5, 5);
 		gbc_txtUser.anchor = GridBagConstraints.CENTER;
@@ -92,7 +101,7 @@ public class ProfilePanel extends AbstractGUI{
 		gbc_lblPass.fill= GridBagConstraints.HORIZONTAL;
 		add(lblPass, gbc_lblPass);
 		
-		JPasswordField txtPass = new RoundJPassField(15, "");
+		final JPasswordField txtPass = new RoundJPassField(15, "");
 		txtPass.setEchoChar('*');
 		GridBagConstraints gbc_txtPass = new GridBagConstraints();
 		gbc_txtPass.insets = new Insets(5, 5, 5, 5);
@@ -116,7 +125,7 @@ public class ProfilePanel extends AbstractGUI{
 		gbc_lblEnv.fill= GridBagConstraints.HORIZONTAL;
 		add(lblEnv, gbc_lblEnv);
 		
-		JTextField txtEnv = new RoundJTextField(15,"Home");
+		final JTextField txtEnv = new RoundJTextField(15,"Home");
 		GridBagConstraints gbc_txtEnv = new GridBagConstraints();
 		gbc_txtEnv.insets = new Insets(5, 5, 5, 5);
 		gbc_txtEnv.anchor = GridBagConstraints.CENTER;
@@ -151,7 +160,7 @@ public class ProfilePanel extends AbstractGUI{
 				groups.add("Group1");
 				
 				//change once function is complete
-				if(false){//SaveData.UExist(username)){
+				if(loadData.userExists(username)){
 					JOptionPane.showMessageDialog(null, "Username exists, please enter a different Username!");
 				}else{
 					try {

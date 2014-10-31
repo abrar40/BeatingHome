@@ -111,7 +111,7 @@ public class HomePanel extends AbstractGUI {
 		model.put("GroupPanel", groupPanel);
 		AppliancePanel applPanel = new AppliancePanel(model);
 		pnlAppl.add(applPanel);
-		model.put("AppliancePanel", pnlEnv);
+		model.put("AppliancePanel", applPanel);
 		EnvironmentPanel envPanel = new EnvironmentPanel(model);
 		System.out.println("Adding Environment Panel");
 		pnlEnv.add(envPanel);

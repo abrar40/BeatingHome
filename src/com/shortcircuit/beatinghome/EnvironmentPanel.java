@@ -105,20 +105,22 @@ public class EnvironmentPanel extends JPanel{
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					// TODO Auto-generated method stub
-					System.out.println("Environment ActionListener kicked off");
-					int index = listEnv.getSelectedIndex();
-					txtSlctEnv = modelEnv.getElementAt(index);
-					lblEnv.setText(txtSlctEnv);
-					lblEnv.revalidate();
-					for(int j=0;j<environments.size();j++){
-						Environment temp2 = environments.get(j);
-						if(temp2.getName().equals(txtSlctEnv))
-							selectedEnvironment = temp2;
+					if(!e.getValueIsAdjusting()){
+						System.out.println("Environment ActionListener kicked off");
+						int index = listEnv.getSelectedIndex();
+						txtSlctEnv = modelEnv.getElementAt(index);
+						lblEnv.setText(txtSlctEnv);
+						lblEnv.revalidate();
+						for(int j=0;j<environments.size();j++){
+							Environment temp2 = environments.get(j);
+							if(temp2.getName().equals(txtSlctEnv))
+								selectedEnvironment = temp2;
+						}
+						model.put("SelectedEnvironment", selectedEnvironment);
+						GroupPanel pnlGroup = (GroupPanel)model.get("GroupPanel");
+						pnlGroup.reWriteListModel();
+						pnlGroup.revalidate();
 					}
-					model.put("SelectedEnvironment", selectedEnvironment);
-					GroupPanel pnlGroup = (GroupPanel)model.get("GroupPanel");
-					pnlGroup.reWriteListModel();
-					pnlGroup.revalidate();
 				}
 			});
 			listEnv.setSelectedIndex(0);

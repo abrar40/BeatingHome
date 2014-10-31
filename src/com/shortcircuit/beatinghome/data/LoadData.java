@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 public class LoadData {
-	private Map<String, Object> model = new HashMap<String, Object>();
+	static private Map<String, Object> model = new HashMap<String, Object>();
 	static String resDir = "resources";
 	static String usernamePath = "resources/flUsernames.txt";
 	static String envPath = "resources/flEnvironments.txt";
@@ -97,6 +97,7 @@ public class LoadData {
 			Appliance appliance = new Appliance();
 			appliance.setID(id);
 			appliance.setName(st.nextToken());
+			appliance.setType(type);
 			appliance.setLocation(st.nextToken());
 			appliance.setMacAddress(st.nextToken());
 			appliance.setPowerRating(st.nextToken());
@@ -140,6 +141,18 @@ public class LoadData {
 		model.put("Groups", groups);
 	}
 	
+	public boolean userExists(String user){
+		boolean exists=false;
+		if(model.containsKey("Users")){
+			ArrayList<User> users = (ArrayList<User>)model.get("Users");
+			for(int i=0; i<users.size();i++){
+				User temp = users.get(i);
+				if(temp.getName().equals(user))
+					exists=true;
+			}
+		}
+		return exists;
+	}
 	public static void createResDir(){
 		File dir = new File(resDir);
 		if(!dir.exists())
